@@ -92,7 +92,7 @@ def main(trim_path, bowtie_path, picard_path, gatk_path,
 
     #Add read group information
     add_path = '{0}/{1}_RG.bam'.format(out_path, os.path.splitext(os.path.basename(sam_path))[0])
-    acmd = ['java', '-Xmx1g', '-jar', picard_path, 'AddOrReplaceReadGroups',
+    acmd = ['java', '-Xmx4g', '-jar', picard_path, 'AddOrReplaceReadGroups',
         'I='+sam_path , 'O='+add_path, 'SORT_ORDER=coordinate', 'RGID=Test', 
         'RGLB=ExomeSeq', 'RGPL=Illumina', 'RGPU=HiSeq2500', 'RGSM=Test', 
         'RGCN=AtlantaGenomeCenter', 'RGDS=ExomeSeq', 'RGDT=2016-08-24', 'RGPI=null', 
@@ -108,7 +108,7 @@ def main(trim_path, bowtie_path, picard_path, gatk_path,
     #Mark PCR duplicates
     dup_path = '{0}/{1}_MD.bam'.format(out_path, os.path.splitext(os.path.basename(sam_path))[0])
     met_path = '{0}/{1}_MD.metrics'.format(out_path, os.path.splitext(os.path.basename(sam_path))[0])
-    mdcmd = ['java', '-Xmx1g', '-jar', picard_path, 'MarkDuplicates', 'I='+add_path, 
+    mdcmd = ['java', '-Xmx4g', '-jar', picard_path, 'MarkDuplicates', 'I='+add_path, 
         'O='+dup_path, 'METRICS_FILE='+met_path, 'REMOVE_DUPLICATES=false', 
         'ASSUME_SORTED=true', 'CREATE_INDEX=true']
     
@@ -120,7 +120,7 @@ def main(trim_path, bowtie_path, picard_path, gatk_path,
 
     #Fix mate information
     fix_path = '{0}/{1}_FM.bam'.format(out_path, os.path.splitext(os.path.basename(sam_path))[0])
-    fcmd = ['java', '-Xmx1g', '-jar', picard_path, 'FixMateInformation',
+    fcmd = ['java', '-Xmx4g', '-jar', picard_path, 'FixMateInformation',
         'I='+dup_path, 'O='+fix_path, 'ASSUME_SORTED=true', 'ADD_MATE_CIGAR=true',
         'CREATE_INDEX=true']
 

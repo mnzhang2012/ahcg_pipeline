@@ -1,4 +1,9 @@
 #Ignore the following folder
 local
 fq
+lib
+output
+sequence
+genome
+dbsnp
 #lib
