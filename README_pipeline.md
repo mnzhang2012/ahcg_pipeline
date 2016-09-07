@@ -29,7 +29,7 @@
 ###2. Instructions for running pipeline  
 2.1. Build bowite2 index for reference genome  
  >`$ bowtie2-build <reference_in> <bt2_base>`  
-    The prebuilt index for reference genome hg19 could be download from [link](ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip)
+    The prebuilt index for reference genome hg19 could be download from [link](ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip)  
 
 2.2. Build fasta index for reference genome  
    `$ samtools faidx ref.fasta`
