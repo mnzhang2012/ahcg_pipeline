@@ -58,4 +58,4 @@ python3 ahcg_pipeline.py -h
 
 
 [GATK - version 3.4](https://software.broadinstitute.org/gatk/download/)  
- [link](ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip)  
+ [link](http://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip)  
