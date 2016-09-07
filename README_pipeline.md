@@ -16,7 +16,7 @@
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This pipeline is using [UCSC-hg19 reference genome]    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ wget www.prism.gatech.edu/~sravishankar9/resources.tar.gz`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.2. Test data
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;1.2.2. Test data  
   Use the following protocol to download and prepare test dataset from NIST sample NA12878  
 
  >`$ wget ftp://ftp-trace.ncbi.nih.gov/giab/ftp/data/NA12878/Garvan_NA12878_HG001_HiSeq_Exome/NIST7035_TAAGGCGA_L001_R1_001.fastq.gz`  
@@ -29,7 +29,7 @@
 ###2. Instructions for running pipeline  
 2.1. Build bowite2 index for reference genome  
  >`$ bowtie2-build <reference_in> <bt2_base>`  
-    The prebuilt index for reference genome hg19 could be download from [link](ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip)  
+    The prebuilt index for reference genome hg19 could be download from ftp://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip  
 
 2.2. Build fasta index for reference genome  
    `$ samtools faidx ref.fasta`
@@ -56,6 +56,3 @@
 To access help use the following command:
 python3 ahcg_pipeline.py -h
 
-
-[GATK - version 3.4](https://software.broadinstitute.org/gatk/download/)  
- [link](http://ftp.ccb.jhu.edu/pub/data/bowtie2_indexes/hg19.zip)  
