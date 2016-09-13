@@ -2,7 +2,7 @@
 local
 fq
 lib
-output
+output*
 sequence
 genome
 dbsnp
