@@ -43,5 +43,5 @@
 11. Run the ahcg\_pipeline.py to get BRCA1 variants call  
 &nbsp;&nbsp;Note: More information about ahcg_pipeline could be found from [link](https://github.com/mnzhang2012/ahcg_pipeline/blob/master/  README.md#variant-calling-pipeline-for-genomic-data-analysis)  
 &nbsp;&nbsp;Note: here is the example command.  
-`$ python3 ahcg_pipeline.py -t lib/Trimmomatic-0.36/trimmomatic-0.36.jar -b lib/bowtie2-2.2.9/bowtie2 -p lib/picard.jar -g lib/GenomeAnalysisTK.jar -i lab/BRCA1_bam/merge_BRCA1_end1.fq lab/BRCA1_bam/merge_BRCA1_end2.fq -w lab/chr17 -d dbsnp/dbsnp_138.hg19.vcf -r lab/chr17.fa -a lib/Trimmomatic-0.36/adapters/NexteraPE-PE.fa -o output_merge_BRC1`  
+>`$ python3 ahcg_pipeline.py -t lib/Trimmomatic-0.36/trimmomatic-0.36.jar -b lib/bowtie2-2.2.9/bowtie2 -p lib/picard.jar -g lib/GenomeAnalysisTK.jar -i lab/BRCA1_bam/merge_BRCA1_end1.fq lab/BRCA1_bam/merge_BRCA1_end2.fq -w lab/chr17 -d dbsnp/dbsnp_138.hg19.vcf -r lab/chr17.fa -a lib/Trimmomatic-0.36/adapters/NexteraPE-PE.fa -o output_merge_BRC1`  
 &nbsp;&nbsp;Note: The output file could be found from vcf_files/merge_BRCA1.vcf
