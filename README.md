@@ -159,5 +159,6 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
   
 8. Use bedtools jaccard to find the number of TP, FP, FN variant calls.
 `$ bedtools jaccard -a <vcf_intersect> -b <vcf_pipeline>`
-`$ bedtools jaccard -a <vcf_intersect> -b <vcf_golden_standard>`
+`$ bedtools jaccard -a <vcf_intersect> -b <vcf_golden_standard>`  
+  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output file could be found from vcf_files/golden_standard_variants.vcf
