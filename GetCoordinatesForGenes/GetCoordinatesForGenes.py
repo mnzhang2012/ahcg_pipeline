@@ -13,9 +13,18 @@ inf_ref.close()
 inf_bed.close()
 
 with open("otogenetics_BRC_biomarker.txt","r") as infile, open("otogenetics_BRC_biomarker_BED.txt","w") as outfile:
+	outfile.write("chr"+"\t"+"chrom_start"+"\t"+"chrom_end"+"\t"+"strand"+"\t"+"name"+"\n")
 	for line in infile:
-		print(line.split()[2]+"\t"+line.split()[4]+"\t"+line.split()[5]+"\t"+line.split()[1]+"\n")
-		outfile.write(line.split()[2]+"\t"+line.split()[4]+"\t"+line.split()[5]+"\t"+line.split()[1]+"\n")
+		print(line.split()[2]+"\t"+line.split()[9]+"\t"+line.split()[10]+"\t"+line.split()[3]+"\t"+line.split()[1]+"\n")
+		print(line.split()[9]+"\t"+line.split()[10])
+		chrom_start = line.split()[9].split(",")
+		del chrom_start[-1]
+		chrom_end = line.split()[10].split(",")
+		del chrom_end[-1]
+		print(chrom_start)
+		print(chrom_end)
+		for x in range(0,len(chrom_start)):
+				outfile.write(line.split()[2]+"\t"+chrom_start[x]+"\t"+chrom_end[x]+"\t"+line.split()[3]+"\t"+line.split()[1]+"\n")
 infile.close()
 outfile.close()
 os.remove("otogenetics_BRC_biomarker.txt")
