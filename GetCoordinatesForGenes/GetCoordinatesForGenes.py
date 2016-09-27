@@ -1,6 +1,6 @@
 import re
 import os
-with open("otogenetics_BRC_list.txt") as inf_bed:
+with open("BRC_OC_gene_list.txt") as inf_bed:
 	next(inf_bed)
 	outf = open("otogenetics_BRC_biomarker.txt","w")
 	for line_bed in inf_bed:
@@ -12,7 +12,7 @@ outf.close()
 inf_ref.close()
 inf_bed.close()
 
-with open("otogenetics_BRC_biomarker.txt","r") as infile, open("otogenetics_BRC_biomarker_BED.txt","w") as outfile:
+with open("otogenetics_BRC_biomarker.txt","r") as infile, open("BRC_OC_gene_list_BED.txt","w") as outfile:
 	outfile.write("chr"+"\t"+"chrom_start"+"\t"+"chrom_end"+"\t"+"strand"+"\t"+"name"+"\n")
 	for line in infile:
 		chrom_start = line.split()[9].split(",")
