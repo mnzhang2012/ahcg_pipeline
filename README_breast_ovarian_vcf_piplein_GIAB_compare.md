@@ -3,7 +3,7 @@
 1. Download the vcf file running from ahcg\_pipeline. [link](https://raw.githubusercontent.com/mjaeyi/ahcg_pipeline/master/variants.vcf)  
 
 2. Download the golden vcf file running from GIAB.  
-'$ wget ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/data/NA12878/analysis/10XGenomics_calls_08142015/NA12878_phased_variants.vcf.gz'
+'$ wget ftp://ftp-trace.ncbi.nlm.nih.gov/giab/ftp/release/NA12878_HG001/latest/NA12878_GIAB_highconf_CG-IllFB-IllGATKHC-Ion-Solid-10X_CHROM1-X_v3.3_highconf.vcf.gz'
 
 3. Make the BED file for the genes from color genomics and otogenetics, breast and ovarian cancer panel.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: 1. [Gene list from otogenetics](http://www.otogenetics.com/forms/Breast\_Cancer\_gene\_list.pdf)    
