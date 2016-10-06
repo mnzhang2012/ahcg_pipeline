@@ -2,9 +2,9 @@
 local
 fq
 lib
-output*
-sequence
-genome
+extractBRCA1readsFromNA12878
+ref_genome
 dbsnp
 lab
 vcf_files_not_upload
+variantRecali
