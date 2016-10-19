@@ -264,3 +264,11 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 2. Use the compare.py script to match the variants between vcf file and pathogenic annotation file.  
 `$ python compare.py variantsRecali_output/recalibrated_snps_raw_indels.vcf variantsRecali_output/BRCA1_brca_exchange_variants.csv > variants_annotation.vcf`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output files are in the folder "variantsRecali_output"    
+
+# Thoughts on how to automate the pipeline from given gene name to pathogenic variants   
+1. Run the pipeline with fastq file and then got the vcf file.  
+2. Run GATK genome recalibrator on vcf.  
+3. Extract the region of interest from vcf based on the chromosome coordinates of specific interested gene.
+3. Match vcf file with clinical variants information in order to find the deleterious variants.  
+4. Calculate the reads coverage in order to prove the occurence of negative results is not due to low reads coverage. 
+5. Write the informative report for the customer 
