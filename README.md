@@ -227,7 +227,40 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 `$ tabix -p vcf file.vcf.gz`  
   
 3. Use GATK variant recalibrator on vcf file.    
-`$ java -Xmx4g -jar lib/GenomeAnalysisTK.jar -T VariantRecalibrator -R ref_genome/hg19.fa -input vcf_files_not_upload/NA12878_variants_ahcg.vcf -resource:hapmap,known=false,training=true,truth=true,prior=15.0 variantRecali/hapmap_3.3.hg19.sites.vcf -resource:omni,known=false,training=true,truth=false,prior=12.0 variantRecali/1000G_omni2.5.hg19.sites.vcf -resource:1000G,known=false,training=true,truth=false,prior=10.0 variantRecali/1000G_phase1.snps.high_confidence.hg19.sites.vcf -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 dbsnp/dbsnp_138.hg19.vcf -an QD -an MQ -an MQRankSum -an ReadPosRankSum -an FS -an SOR -an InbreedingCoeff -mode SNP -recalFile output.recal -tranchesFile output.tranches -rscriptFile output.plots.R`   
+`$ java -Xmx4g -jar lib/GenomeAnalysisTK.jar  \  
+    -T VariantRecalibrator \  
+    -R ref_genome/hg19.fa  \  
+    -input vcf_files_not_upload/NA12878_variants_ahcg.vcf \  
+    -resource:hapmap,known=false,training=true,truth=true,prior=15.0 variantRecali/hapmap_3.3.hg19.sites.vcf \  -resource:omni,known=false,training=true,truth=false,prior=12.0 variantRecali/1000G_omni2.5.hg19.sites.vcf \  -resource:1000G,known=false,training=true,truth=false,prior=10.0 variantRecali/1000G_phase1.snps.high_confidence.hg19.sites.vcf \  -resource:dbsnp,known=true,training=false,truth=false,prior=2.0 dbsnp/dbsnp_138.hg19.vcf 
+    -an DP \  
+    -an QD \  
+    -an FS \  
+    -an SOR \  
+    -an MQRankSum \  
+    -an ReadPosRankSum \  
+    -mode SNP \  
+    -tranche 100.0 -tranche 99.9 -tranche 99.0 -tranche 90.0 \  
+    -recalFile recalibrate_SNP.recal \  
+    -tranchesFile recalibrate_SNP.tranches`   
+   
+  
+`$ java -jar lib/GenomeAnalysisTK.jar \ 
+    -T ApplyRecalibration \ 
+    -R ref_genome/hg19.fa \ 
+    -input vcf_files_not_upload/NA12878_variants_ahcg.vcf \ 
+    -mode SNP \ 
+    --ts_filter_level 99.0 \ 
+    -recalFile recalibrate_SNP.recal \ 
+    -tranchesFile recalibrate_SNP.tranches \ 
+    -o recalibrated_snps_raw_indels.vcf`
 
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: "-an InbreedingCoeff" removed. Running the command with this tag will bring the error:  "Bad input: Values for InbreedingCoeff annotation not detected for ANY training variant in the input callset. VariantAnnotator may be usep://gatkforums.broadinstitute.org/discussion/49/using-variant-annotator"  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output files are in the folder "variantRecali-output"    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output files are in the folder "variantsRecali_output"    
+
+# How to annotate the vcf file with pathogenicity   
+1. Download the BRCA variant pathogenic annotation file.  
+`$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/BRCA/BRCA1_brca_exchange_variants.csv`  
+`$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/BRCA/BRCA2_brca_exchange_variants.csv`  
+
+2. Use the compare.py script to match the variants between vcf file and pathogenic annotation file.  
+`$ python compare.py variantsRecali_output/recalibrated_snps_raw_indels.vcf variantsRecali_output/BRCA1_brca_exchange_variants.csv > variants_annotation.vcf`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output files are in the folder "variantsRecali_output"    
