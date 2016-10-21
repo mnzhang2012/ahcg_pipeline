@@ -226,7 +226,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 `$ bgzip -c file.vcf > file.vcf.gz`  
 `$ tabix -p vcf file.vcf.gz`  
   
-3. Use GATK variant recalibrator on vcf file.    
+3. Run the variant recalibrator.    
 `$ java -Xmx4g -jar lib/GenomeAnalysisTK.jar  \  
     -T VariantRecalibrator \  
     -R ref_genome/hg19.fa  \  
@@ -243,7 +243,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
     -recalFile recalibrate_SNP.recal \  
     -tranchesFile recalibrate_SNP.tranches`   
    
-  
+4. Run GATK again to get vcf file.    
 `$ java -jar lib/GenomeAnalysisTK.jar \ 
     -T ApplyRecalibration \ 
     -R ref_genome/hg19.fa \ 
@@ -253,22 +253,38 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
     -recalFile recalibrate_SNP.recal \ 
     -tranchesFile recalibrate_SNP.tranches \ 
     -o recalibrated_snps_raw_indels.vcf`
-
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output files are in the folder "variantsRecali_output"    
+
+# How to calculate read depth
+ 1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"
+ `$ grep 'NM_007298' brc_oc_gene_list_bed.txt > brca1.bed`
+ 2. Extract brca1 alignments
+ `$ samtools view -L brca1.bed data/project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam -b > na12878.brca1.bam`
+ 3. Computes and summarize coverage for brca1  
+ `$ bedtools genomecov -ibam na12878.brca1.bam -bga > na12878.brca1.bga.bed`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -ibam	BAM file as input for coverage.  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; -bga	Report depth in BedGraph format.  
+ 4. Intersection between two bed files.
+`$ bedtools intersect -split -a na12878.brca1.bga.bed -b brca1.bed -bed > brca1.final.bed`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; when using the -split option, only the exon overlaps are reported
+ 5. Use the ReadDepthCalculation.py to get the read depth result.
+`$ python ReadDepthCalculation.py`
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; The result is in brca1_depth.txt.  
+
 
 # How to annotate the vcf file with pathogenicity   
 1. Download the BRCA variant pathogenic annotation file.  
 `$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/BRCA/BRCA1_brca_exchange_variants.csv`  
 `$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/BRCA/BRCA2_brca_exchange_variants.csv`  
 
-2. Use the compare.py script to match the variants between vcf file and pathogenic annotation file.  
-`$ python compare.py variantsRecali_output/recalibrated_snps_raw_indels.vcf variantsRecali_output/BRCA1_brca_exchange_variants.csv > variants_annotation.vcf`  
+2. Use the PathgenicAnnotation.py script to match the variants between vcf file and pathogenic annotation file.  
+`$ python PathgenicAnnotation.py variantsRecali_output/recalibrated_snps_raw_indels.vcf variantsRecali_output/BRCA1_brca_exchange_variants.csv > variants_annotation.vcf`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: The output files are in the folder "variantsRecali_output"    
 
 # Thoughts on how to automate the pipeline from given gene name to pathogenic variants   
 1. Run the pipeline with fastq file and then got the vcf file.  
 2. Run GATK genome recalibrator on vcf.  
-3. Extract the region of interest from vcf based on the chromosome coordinates of specific interested gene.
 3. Match vcf file with clinical variants information in order to find the deleterious variants.  
 4. Calculate the reads coverage in order to prove the occurence of negative results is not due to low reads coverage. 
-5. Write the informative report for the customer 
+5. Integrate the reads coverage information with the pathogenic information for each variants. 
+`$ python brca1_report_depth_pathogenic.py variants_annotation.vcf brca1_depth.txt`

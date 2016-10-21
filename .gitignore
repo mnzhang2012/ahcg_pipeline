@@ -5,6 +5,7 @@ lib
 extractBRCA1readsFromNA12878
 ref_genome
 dbsnp
+na12878_bam
 lab
 vcf_files_not_upload
 variantRecali
