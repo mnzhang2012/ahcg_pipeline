@@ -14,7 +14,7 @@
  &nbsp;&nbsp;1.2.1. Reference genome
   Reference genomes can be downloaded from [Illumina iGenomes](http://support.illumina.com/sequencing/sequencing_software/igenome.html)  
  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;This pipeline is using [UCSC-hg19 reference genome]    
- &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The genomic reference and dbSNP file that you need for the pipeline are avaiable at following link  
+ &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;The genomic reference and dbSNP file that you need for the pipeline are avaiable at following link
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;`$ wget www.prism.gatech.edu/~sravishankar9/resources.tar.gz`
 
  &nbsp;&nbsp;1.2.2. Test data  
@@ -116,7 +116,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 &nbsp;&nbsp;Note:From the BRCA1 bam file we now extract the reads aligning to the region using bedtools      
 &nbsp;&nbsp;Note:If your BAM alignments are from paired-end sequence data, one can use the -fq2 option to create two distinct FASTQ output files, one for end 1 and one for end 2. When using this option, it is required that the BAM file is sorted/grouped by the read name. This keeps the resulting records in the two output FASTQ files in the same order.   
 8. Picard genome dictionary  
-&nbsp;&nbsp;Note: The reference file could be download from (link)[http://vannberg.biology.gatech.edu/data/chr17.fa]  
+&nbsp;&nbsp;Note: The reference file could be download from (link)[http://vannberg.biology.gatech.edu/data/chr17.fa]    
 `$ java -jar picard.jar CreateSequenceDictionary R=ref.fa O=ref.dict`
 
 9. Samtools fasta index   
@@ -152,9 +152,9 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 7. Use bedtools subtract to find calls that are unique for pipeline vcf.  
 `$ bedtools substract -a <vcf_pipeline> -b <vcf_intersect>`
   
-8. Use bedtools jaccard to find the number of TP, FP, FN variant calls.
-`$ bedtools jaccard -a <vcf_intersect> -b <vcf_pipeline>`
-`$ bedtools jaccard -a <vcf_intersect> -b <vcf_golden_standard>`  
+8. Use bedtools jaccard to find the number of TP, FP, FN variant calls.  
+`$ bedtools jaccard -a <vcf_intersect> -b <vcf_pipeline>`  
+`$ bedtools jaccard -a <vcf_intersect> -b <vcf_golden_standard>`    
 
 # Extract chromosome coordinates given NCBI_Accession number.    
 
@@ -191,11 +191,11 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 3.7. Add 20bp flank region to both the chrom\_star and chrom\_end.  
 `$ python Add 20bp.py`    
 4. Use bedtools to extract variants from ahcg\_pipeline vcf files and GIAB golden vcf, given the regions listed in the bed file for breast and ovarian cancer panel.   
-`$ bedtools intersect -wa -header -a <vcf file> -b <bed file> > ahcg\_vcf\_BRCA\_OC.txt` 
-`$ bedtools intersect -wa -header -a <vcf file> -b <bed file> > NA12878\_vcf\_BRCA\_OC.txt`  
+`$ bedtools intersect -wa -header -a <vcf file> -b <bed file> `   
+`$ bedtools intersect -wa -header -a <vcf file> -b <bed file> `  
 
 5. Use bedtools to find intersect calls between vcf(from pipeline) and golden standard vcf.  
-`$ bedtools intersect -a <vcf_golden_standard> -b <vcf_pipeline> > NA12878_ahcg_overlap_vcf_BRCA_OC.txt`   
+`$ bedtools intersect -a <vcf_golden_standard> -b <vcf_pipeline> `   
 
 
 # GATK-variantRecalibrator
@@ -238,26 +238,26 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
    
 
 # How to calculate read depth
- 1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"
+ 1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"  
  `$ grep 'NM_007298' brc_oc_gene_list_bed.txt > brca1.bed`
- 2. Extract brca1 alignments
+ 2. Extract brca1 alignments  
  `$ samtools view -L brca1.bed project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam -b > na12878.brca1.bam`
  3. Computes and summarize coverage for brca1  
  `$ bedtools genomecov -ibam na12878.brca1.bam -bga > na12878.brca1.bga.bed`  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -ibam BAM file as input for coverage.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -bga  Report depth in BedGraph format.  
- 4. Intersection between two bed files.
-`$ bedtools intersect -split -a na12878.brca1.bga.bed -b brca1.bed -bed > brca1.final.bed`  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: when using the -split option, only the exon overlaps are reported
- 5. Use the ReadDepthCalculation.py to get the read depth result.  
-`$ python ReadDepthCalculation.py`  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -bga  Report depth in BedGraph format.    
+ 4. Intersection between two bed files.  
+`$ bedtools intersect -split -a na12878.brca1.bga.bed -b brca1.bed -bed > brca1.final.bed`    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: when using the -split option, only the exon overlaps are reported  
+ 5. Use the ReadDepthCalculation.py to get the read depth result.    
+`$ python ReadDepthCalculation.py`    
 
-# How to annotate the vcf file with pathogenicity   
-1. Download the BRCA variant pathogenic annotation file.  
+# How to annotate the vcf file with pathogenicity     
+1. Download the BRCA variant pathogenic annotation file.    
 `$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/BRCA/BRCA1_brca_exchange_variants.csv`  
 `$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/BRCA/BRCA2_brca_exchange_variants.csv`  
 
-2. Use the PathgenicAnnotation.py script to match the variants between vcf file and pathogenic annotation file.  
+2. Use the PathgenicAnnotation.py script to match the variants between vcf file and pathogenic annotation file.    
 `$ python PathgenicAnnotation.py variantsRecali_output/recalibrated_snps_raw_indels.vcf variantsRecali_output/BRCA1_brca_exchange_variants.csv > variants_annotation.vcf`  
 
 # How to automate the pipeline from given gene name to pathogenic variants   
@@ -265,5 +265,5 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 2. Run GATK genome recalibrator on vcf.  
 3. Match vcf file with clinical variants information in order to find the deleterious variants.  
 4. Calculate the reads coverage in order to prove the occurence of negative results is not due to low reads coverage. 
-5. Integrate the reads coverage information with the pathogenic information for each variants. 
+5. Integrate the reads coverage information with the pathogenic information for each variants.   
 `$ python brca1_report_depth_pathogenic.py variants_annotation.vcf brca1_depth.txt`
