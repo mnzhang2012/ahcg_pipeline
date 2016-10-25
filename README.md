@@ -237,7 +237,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
     -o recalibrated_snps_raw_indels.vcf`
    
 
-# How to calculate read depth
+# How to calculate read coverage
  1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"  
  `$ grep 'NM_007298' brc_oc_gene_list_bed.txt > brca1.bed`
  2. Extract brca1 alignments  
@@ -249,7 +249,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
  4. Intersection between two bed files.  
 `$ bedtools intersect -split -a na12878.brca1.bga.bed -b brca1.bed -bed > brca1.final.bed`    
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: when using the -split option, only the exon overlaps are reported  
- 5. Use the ReadDepthCalculation.py to get the read depth result.    
+ 5. Use the ReadDepthCalculation.py to get the read coverage result.    
 `$ python ReadDepthCalculation.py`    
 
 # How to annotate the vcf file with pathogenicity     
