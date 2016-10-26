@@ -237,19 +237,23 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
     -o recalibrated_snps_raw_indels.vcf`
    
 
-# How to calculate read coverage
+# How to calculate read depth based on alignment file.
  1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"  
  `$ grep 'NM_007298' brc_oc_gene_list_bed.txt > brca1.bed`
  2. Extract brca1 alignments  
- `$ samtools view -L brca1.bed project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam -b > na12878.brca1.bam`
- 3. Computes and summarize coverage for brca1  
- `$ bedtools genomecov -ibam na12878.brca1.bam -bga > na12878.brca1.bga.bed`  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -ibam BAM file as input for coverage.  
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -bga  Report depth in BedGraph format.    
+ `$ samtools view -L brca1.bed project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam -b > na12878.brca1.bam`   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -L: only output alignments overlapping in the input bed file   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -b: output alignments in the bam format   
+ 3. Computes and summarize coverage for brca1   
+ `$ bedtools genomecov -ibam na12878.brca1.bam -bga > na12878.brca1.bga.bed`   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -ibam BAM file as input for coverage.   
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -bga  Reporting genome coverage for all positions in BEDGRAPH format.    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: This is BedGraph format:  
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;chrom chromStart chromEnd dataValue  
  4. Intersection between two bed files.  
 `$ bedtools intersect -split -a na12878.brca1.bga.bed -b brca1.bed -bed > brca1.final.bed`    
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: when using the -split option, only the exon overlaps are reported  
- 5. Use the ReadDepthCalculation.py to get the read coverage result.    
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: when using the -split option, only the exon overlaps are reported    
+ 5. Use the ReadDepthCalculation.py to get the read depth result.    
 `$ python ReadDepthCalculation.py`    
 
 # How to annotate the vcf file with pathogenicity     
