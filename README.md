@@ -239,7 +239,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 
 # How to calculate read depth based on alignment file.
  1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"  
- `$ grep 'NM_007298' brc_oc_gene_list_bed.txt > brca1.bed`
+ `$ grep 'NM_007294' brc_oc_gene_list_bed.txt > brca1.bed`
  2. Extract brca1 alignments  
  `$ samtools view -L brca1.bed project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam -b > na12878.brca1.bam`   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -L: only output alignments overlapping in the input bed file   
@@ -267,7 +267,10 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 # How to automate the pipeline from given gene name to pathogenic variants   
 1. Run the pipeline with fastq file and then got the vcf file.  
 2. Run GATK genome recalibrator on vcf.  
-3. Match vcf file with clinical variants information in order to find the deleterious variants.  
+3. Match variants with clinical variants information.  
 4. Calculate the reads coverage in order to prove the occurence of negative results is not due to low reads coverage. 
 5. Integrate the reads coverage information with the pathogenic information for each variants.   
-`$ python brca1_report_depth_pathogenic.py variants_annotation.vcf brca1_depth.txt`
+`$ python brca1_report_depth_pathogenic.py variants_annotation.vcf brca1_depth.txt`  
+The exome coverage and depth frequency is in the output folder.   
+6. For the variants have low coverage, add the depth information extracted from vcf file.  
+`$ python pathgenic_annotation_add_dp.py`  
