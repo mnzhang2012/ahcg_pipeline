@@ -239,7 +239,7 @@ Notes: A branch in Git is simply a lightweight movable pointer to one of these c
 
 # How to calculate read depth based on alignment file.
  1. Extract BRCA1 gene chromosome coordinates from "BRC\_OC\_gene\_list\_BED.txt"  
- `$ grep 'NM_007294' brc_oc_gene_list_bed.txt > brca1.bed`
+ `$ grep 'NM_007294' brc_oc_gene_list_bed_add_20.txt > brca1.bed`
  2. Extract brca1 alignments  
  `$ samtools view -L brca1.bed project.NIST_NIST7035_H7AP8ADXX_TAAGGCGA_1_NA12878.bwa.markDuplicates.bam -b > na12878.brca1.bam`   
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Note: -L: only output alignments overlapping in the input bed file   
