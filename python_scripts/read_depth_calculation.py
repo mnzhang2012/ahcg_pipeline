@@ -9,7 +9,7 @@ with open(sys.argv[1]) as f:
 		chrom = array[0]
 		start = int(array[1])
 		end = int(array[2])
-		depth = array[4]
+		depth = array[3]
 		total = total + (end - start)
 
 		while (start < end):
