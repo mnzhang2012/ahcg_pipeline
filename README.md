@@ -297,7 +297,7 @@ Procedues:
 ###5. Extract the variants of DCM genes for each patient samples    
 `$ bedtools intersect -wa -header -a c1_recalibrated_snps_raw_indels.vcf -b dcm_gene_list.bed > control1_dcm_final.vcf`    
 
-###6. Calculat the reads deapth information for DCM genes    
+###6. Calculat the reads depth information for DCM genes    
 ######6.1 Extract brca1 alignments using samtools.    
 `$ samtools view -L dcm_gene_list.bed Control1_RG_MD_IR_BQ.bam -b > c1_dcm.bam`     
 ######6.2 Computes and summarize the depth for brca1    
@@ -308,3 +308,6 @@ Procedues:
 `$ python read_depth_calculation.py c1_bcm.final.bed > c1_bcm_depth.txt`   
 
 &nbsp;&nbsp;&nbsp;&nbsp;Notes: Step 6 could be done for 6 samples using script dcm\_read\_coverage.sh.    
+
+###7. Integrate reads depth information for the DCM variants.    
+Use the add\_infor\_to\_vcf.py to add the reads depth information. 
