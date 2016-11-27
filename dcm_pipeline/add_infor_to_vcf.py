@@ -1,5 +1,6 @@
 #! /usr/local/env python3.4
 #argv[1] is the vcf file 
+#argv[2] is the read depth information file 
 
 import vcf
 import sys
