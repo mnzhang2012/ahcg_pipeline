@@ -282,32 +282,4 @@ Procedues:
 > `$ java -Xmx4g -jar lib/GenomeAnalysisTK.jar -T ApplyRecalibration -R input_files/ref_genome/hg19.fa -input input_files/dcm_vcf_haplotypeCaller/c1_raw_variants.vcf -mode SNP --ts_filter_level 99.0 -recalFile input_files/dcm_vcf_haplotypeCaller/c1_recalibrate_SNP.recal -tranchesFile input_files/dcm_vcf_haplotypeCaller/c1_recalibrate_SNP.tranches -o c1_recalibrated_snps_raw_indels.vcf`  
 
 &nbsp;&nbsp;Notes: Step 2 and Step 3 could be done in one step using script dcm_variant_call_pipeline.sh.     
-`$ sh dcm_variant_call_pipeline.sh`    
-###4. Create the bed file of the chromosome coordinates for DCM genes     
-######4.1 Create DCM related gene list    
-&nbsp;&nbsp;&nbsp;&nbsp;Hint: Look up the DCM related publications and decide the genes that play important roles in DCM. The file has been saved as dcm\_gene.txt.   
-######4.2 Download the reference genome file    
-`$ wget http://vannberg.biology.gatech.edu/data/ahcg2016/reference_genome/hg19_refGene.txt`     
-######4.3 Run the python script to get the genome coordinates for the NCBI\_Accession list      
-`$ python get_coordinates_from_gene.py`    
-######4.4 Add 20bp flank region to both the chrom\_star and chrom\_end of each gene's chromosome coordinates.       
-`$ python 20bp_flank_both_ends.py`     
-&nbsp;&nbsp;&nbsp;&nbsp;Hint: The output file saved as dcm\_gene\_list.bed    
-
-###5. Extract the variants of DCM genes for each patient samples    
-`$ bedtools intersect -wa -header -a c1_recalibrated_snps_raw_indels.vcf -b dcm_gene_list.bed > control1_dcm_final.vcf`    
-
-###6. Calculat the reads depth information for DCM genes    
-######6.1 Extract brca1 alignments using samtools.    
-`$ samtools view -L dcm_gene_list.bed Control1_RG_MD_IR_BQ.bam -b > c1_dcm.bam`     
-######6.2 Computes and summarize the depth for brca1    
-`$ bedtools genomecov -ibam c1_dcm.bam -bga > c1_dcm_bga.bed`  
-######6.3 Intersection between two bed files.    
-`$ bedtools intersect -split -a c1_dcm_bga.bed -b dcm_gene_list.bed -bed > c1_bcm.final.bed`  
-######6.4. Use the read\_depth\_calculation.py to get the read depth result.    
-`$ python read_depth_calculation.py c1_bcm.final.bed > c1_bcm_depth.txt`   
-
-&nbsp;&nbsp;&nbsp;&nbsp;Notes: Step 6 could be done for 6 samples using script dcm\_read\_coverage.sh.    
-
-###7. Integrate reads depth information for the DCM variants.    
-Use the add\_infor\_to\_vcf.py to add the reads depth information. 
+`$ sh dcm_variant_call_pipeline.sh`     
