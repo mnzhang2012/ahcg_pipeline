@@ -2,5 +2,6 @@
 local
 lib
 input_files
-cancer_gene_panel
 dcm_pipeline
+final_project
+
